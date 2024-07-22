@@ -2,6 +2,7 @@ import express from 'express';
 import connectDB from './config/database.js';
 import './config/dotenv.js';
 import userRoutes from './routes/userRoutes.js';
+import authRoutes  from './routes/authRoutes.js';
 import cors from 'cors'
 
 const app = express();
@@ -21,5 +22,6 @@ app.use(cors(corsOptions));
 
 
 app.use('/api', userRoutes);
+app.use('/api', authRoutes);
 
 export default app;

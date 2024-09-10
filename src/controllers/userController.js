@@ -1,5 +1,9 @@
 import User from '../models/userModel.js';
 import bcrypt from 'bcrypt'
+import mv from 'fs'
+import { fileURLToPath } from 'url';
+import path from 'path';
+
 
 export const getUsers = async (req, res) => {
   try {
@@ -42,4 +46,24 @@ export const getCurrentUser = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+}
+
+export const uploadProfilePic = (req, res) => {
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
+
+  const image = req.files.image
+
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+
+  const uploadPath = './uploads/' + image.name
+
+  image.mv(uploadPath, function (err) {
+    if (err)
+      return res.status(500).send(err);
+
+    res.send('File uploaded!');
+  });
 }

@@ -5,11 +5,15 @@ import userRoutes from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import cors from "cors";
 import dotenv from "dotenv";
+import fileUpload from 'express-fileupload'
 
 dotenv.config();
 
 const app = express();
 connectDB();
+
+app.use(fileUpload());
+app.use(express.static('uploads'))
 
 app.use(cors());
 
